@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Reporting System - Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/admin-dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Public Reporting System</h1>
+        </div>
+        <nav>
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="#" onclick="confirmLogout()">
+                <span class="nav-icon">👤</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-menu">
+            <a href="manage-users.html">
+                <span class="menu-icon">👥</span>
+                <span>Manage Users</span>
+            </a>
+            <a href="ticket-queue.html">
+                <span class="menu-icon">🎫</span>
+                <span>Ticket Queue</span>
+            </a>
+            <a href="statistics.html">
+                <span class="menu-icon">📊</span>
+                <span>Statistics</span>
+            </a>
+            <a href="post-announcement.html">
+                <span class="menu-icon">📢</span>
+                <span>Post Announcement</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="welcome-section">
+            <h2>Welcome, <span class="username">Admin User</span></h2>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-icon">👥</span>
+                    <h3>Total Users</h3>
+                    <p class="count">142</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">🎫</span>
+                    <h3>Total Tickets</h3>
+                    <p class="count">89</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✅</span>
+                    <h3>Resolved</h3>
+                    <p class="count">63</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">📢</span>
+                    <h3>Announcements</h3>
+                    <p class="count">15</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Public Reporting System. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function confirmLogout() {
+            if(confirm("Are you sure you want to log out?")) {
+                window.location.href = "login.html";
+            }
+        }
+    </script>
+</body>
+</html>

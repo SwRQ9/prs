@@ -1,0 +1,259 @@
+/* submit-ticket.css */
+/* Base Styles - Consistent with Register Page */
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Consistent Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logo h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    margin-left: 20px;
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+/* Ticket Form Container - Framed Version */
+.ticket-form {
+    background-color: #2c3e50;
+    border-radius: 12px;
+    padding: 40px 30px;
+    border: 1px solid #3a3a5f;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    margin: 30px auto;
+    width: 90%;
+    max-width: 800px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Input Group Styling */
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cccccc;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Textarea Styling */
+textarea {
+    width: 100%;
+    background-color: #1e1e2f;
+    border: 1px solid #3a3a5f;
+    border-radius: 8px;
+    padding: 12px;
+    color: #ffffff;
+    font-size: 16px;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.3s;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+/* Select Dropdown Styling */
+select {
+    width: 100%;
+    background-color: #1e1e2f;
+    border: 1px solid #3a3a5f !important;
+    border-radius: 8px;
+    padding: 12px;
+    color: #ffffff;
+    font-size: 16px;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cccccc'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 18px;
+}
+
+
+/* submit-ticket.css - Final Version */
+/* Added Other Category Section Styling */
+
+/* ... (keep all previous styles) ... */
+
+/* Custom Category Input Styling - Added Section */
+#other-category-group {
+    margin-top: -15px;
+    margin-bottom: 20px;
+}
+
+#other-category-group .input-wrapper {
+    background-color: #1e1e2f;
+    border: 1px solid #3a3a5f;
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    transition: border-color 0.3s;
+}
+
+#other-category-group .input-wrapper:focus-within {
+    border-color: #3498db;
+}
+
+#other-category-group input {
+    background: none;
+    border: none;
+    color: #ffffff;
+    width: 100%;
+    font-size: 16px;
+    outline: none;
+}
+
+#other-category-group input::placeholder {
+    color: #666;
+    font-size: 14px;
+}
+
+#other-category-group .input-icon {
+    font-size: 20px;
+    margin-right: 12px;
+    color: #cccccc;
+}
+
+/* Map Container Styling */
+#map {
+    background-color: #1e1e2f;
+    border: 1px solid #3a3a5f;
+}
+
+/* Current Location Button */
+.current-location-button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #2ecc71;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.current-location-button:hover {
+    background-color: #27ae60;
+}
+
+/* File Upload Styling */
+input[type="file"] {
+    width: 100%;
+    background-color: #1e1e2f;
+    border: 1px solid #3a3a5f;
+    border-radius: 8px;
+    padding: 12px;
+    color: #cccccc;
+    font-size: 14px;
+}
+
+input[type="file"]::file-selector-button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-right: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+input[type="file"]::file-selector-button:hover {
+    background-color: #2980b9;
+}
+
+/* Submit Button */
+.submit-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+.submit-button:hover {
+    background-color: #2980b9;
+}
+
+/* Footer Styling */
+.admin-footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #ffffff;
+    margin-top: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ticket-form {
+        padding: 30px 20px;
+        margin: 20px auto;
+    }
+    
+    textarea {
+        min-height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 15px;
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    nav a {
+        margin-left: 0;
+    }
+    
+    .ticket-form {
+        padding: 25px 15px;
+        width: 95%;
+    }
+}

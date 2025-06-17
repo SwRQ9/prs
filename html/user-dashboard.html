@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Reporting System - User Dashboard</title>
+    <link rel="stylesheet" href="../css/user-dashboard.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Public Reporting System</h1>
+        </div>
+        <nav>
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="#" onclick="confirmLogout()"> <!-- Updated logout link -->
+                <span class="nav-icon">👤</span>
+                <span>Logout</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-menu">
+            <a href="view-profile.html" class="active">
+                <span class="menu-icon">👤</span>
+                <span>View Profile</span>
+            </a>
+            <a href="view-tickets.html">
+                <span class="menu-icon">🎫</span>
+                <span>View Tickets</span>
+            </a>
+            <a href="submit-ticket.html">
+                <span class="menu-icon">📤</span>
+                <span>Submit Ticket</span>
+            </a>
+            <a href="view-announcements.html">
+                <span class="menu-icon">📢</span>
+                <span>View Announcements</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="welcome-section">
+            <h2>Welcome, <span class="username">Sultan Bahasan</span>!</h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-icon">🎫</span>
+                    <h3>Total Tickets</h3>
+                    <p class="count">5</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">✅</span>
+                    <h3>Resolved</h3>
+                    <p class="count">3</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-icon">⏳</span>
+                    <h3>Pending</h3>
+                    <p class="count">2</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Public Reporting System. All rights reserved.</p>
+    </footer>
+
+    <!-- Logout Confirmation Script -->
+    <script>
+        function confirmLogout() {
+            const confirmLogout = confirm("Are you sure you want to log out?");
+            if (confirmLogout) {
+                window.location.href = "login.html"; // Redirect to login page
+            }
+        }
+    </script>
+</body>
+</html>

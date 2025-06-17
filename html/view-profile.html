@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile</title>
+  <link rel="stylesheet" href="../css/view-profile.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <h1>Public Reporting System</h1>
+      </div>
+      <nav>
+        <a href="user-dashboard.html">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Profile Content -->
+    <div class="profile-frame">
+      <h2 class="profile-header">My Profile</h2>
+      
+      <div class="profile-content">
+        <!-- Full Name -->
+        <div class="input-group profile-group">
+          <label>Full Name</label>
+          <div class="input-wrapper">
+            <span class="input-icon">👤</span>
+            <input type="text" id="full-name" value="Ali Ahmed" disabled>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="input-group profile-group">
+          <label>Email Address</label>
+          <div class="input-wrapper">
+            <span class="input-icon">📧</span>
+            <input type="email" id="email" value="ali@example.com" disabled>
+          </div>
+        </div>
+
+        <!-- Security Question -->
+        <div class="input-group profile-group">
+          <label>Security Question</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🔒</span>
+            <select id="security-question" disabled>
+              <option value="mother-maiden">What is your mother's maiden name?</option>
+              <option value="pet-name">What was the name of your first pet?</option>
+              <option value="birth-city">What city were you born in?</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Security Answer -->
+        <div class="input-group profile-group">
+          <label>Security Answer</label>
+          <div class="input-wrapper">
+            <span class="input-icon">🗝️</span>
+            <input type="password" 
+                   id="security-answer" 
+                   value="Smith" 
+                   disabled
+                   placeholder="Enter your security answer">
+            <span class="toggle-visibility" onclick="togglePasswordVisibility()">
+              <span class="eye-icon">👁️</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Edit Button -->
+        <button class="edit-button" onclick="toggleEdit()">
+          <span class="btn-icon">✏️</span>
+          <span id="button-text">Edit Profile</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="admin-footer">
+      <p>© 2025 Public Reporting System v1.0</p>
+    </div>
+  </div>
+
+  <script>
+    let isEditing = false;
+    
+    function toggleEdit() {
+      const fields = ['#full-name', '#email', '#security-question', '#security-answer'];
+      const buttonText = document.getElementById('button-text');
+      
+      if (!isEditing) {
+        // Enter edit mode
+        fields.forEach(field => {
+          document.querySelector(field).disabled = false;
+        });
+        buttonText.textContent = 'Save Changes';
+        isEditing = true;
+      } else {
+        // Show success message
+        showSuccessMessage('Changes saved successfully!');
+        
+        // Lock fields
+        fields.forEach(field => {
+          document.querySelector(field).disabled = true;
+        });
+        buttonText.textContent = 'Edit Profile';
+        isEditing = false;
+        
+        // Reset security answer visibility
+        document.getElementById('security-answer').type = 'password';
+        document.querySelector('.eye-icon').textContent = '👁️';
+      }
+    }
+
+    function togglePasswordVisibility() {
+      const answerField = document.getElementById('security-answer');
+      const eyeIcon = document.querySelector('.eye-icon');
+      
+      if (answerField.type === 'password') {
+        answerField.type = 'text';
+        eyeIcon.textContent = '👁️';
+      } else {
+        answerField.type = 'password';
+        eyeIcon.textContent = '👁️';
+      }
+    }
+
+    function showSuccessMessage(text) {
+      const msg = document.createElement('div');
+      msg.className = 'temp-message';
+      msg.textContent = text;
+      
+      const frame = document.querySelector('.profile-frame');
+      frame.prepend(msg);
+      
+      setTimeout(() => msg.remove(), 2000);
+    }
+  </script>
+</body>
+</html>

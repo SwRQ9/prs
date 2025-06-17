@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Reporting System - Register</title>
+    <link rel="stylesheet" href="../css/register.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Public Reporting System</h1>
+        </div>
+        <nav>
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="register-section">
+            <div class="register-frame">
+                <h2>Create an Account</h2>
+                <form class="register-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">📧</span>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <span class="toggle-password" onclick="togglePasswordVisibility('password')">👁️</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                            <span class="toggle-password" onclick="togglePasswordVisibility('confirm-password')">👁️</span>
+                        </div>
+                    </div>
+                    <!-- Security Question -->
+                    <div class="form-group">
+                        <label for="security-question">Security Question</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔐</span>
+                            <select id="security-question" name="security-question" required>
+                                <option value="" disabled selected>Select a security question</option>
+                                <option value="mother-maiden">What is your mother's maiden name?</option>
+                                <option value="pet-name">What was the name of your first pet?</option>
+                                <option value="birth-city">What city were you born in?</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Security Answer -->
+                    <div class="form-group">
+                        <label for="security-answer">Security Answer</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🗝️</span>
+                            <input type="text" id="security-answer" name="security-answer" placeholder="Enter your answer" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">
+                        <span class="btn-icon">📝</span>
+                        <span>Register</span>
+                    </button>
+                </form>
+                <div class="login-link">
+                    <p>Already have an account? <a href="login.html">Login here</a></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Public Reporting System. All rights reserved.</p>
+    </footer>
+
+    <!-- Script for Toggle Password -->
+    <script>
+        function togglePasswordVisibility(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const toggleIcon = passwordInput.nextElementSibling; // Get the eye icon
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '👁️';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+    </script>
+</body>
+</html>

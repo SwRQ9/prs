@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Ticket</title>
+  <link rel="stylesheet" href="../css/submit-ticket.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Leaflet Control Geocoder CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <!-- Leaflet Fullscreen CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.0.0/Control.FullScreen.css" />
+</head>
+<body>
+  <div class="admin-container">
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <h1>Public Reporting System</h1>
+        </div>
+        <nav>
+            <a href="index.html">
+                <span class="nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- Ticket Form -->
+    <div class="ticket-form">
+      <div class="input-group">
+        <label for="description">Issue Description</label>
+        <textarea id="description" placeholder="Describe the issue"></textarea>
+      </div>
+      <div class="input-group">
+        <label for="category">Category</label>
+        <select id="category" onchange="toggleOtherCategory()">
+          <option value="infrastructure">Infrastructure</option>
+          <option value="safety">Safety</option>
+          <option value="environment">Environment</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <!-- submit-ticket.html - Updated Other Category Section -->
+<div class="input-group" id="other-category-group" style="display: none;">
+    <label for="other-category">Specify Category (Optional)</label>
+    <div class="input-wrapper">
+        <input type="text" 
+               id="other-category" 
+               name="other-category"
+               placeholder="Enter the category">
+    </div>
+</div>
+      <div class="input-group">
+        <label for="location">Location</label>
+        <div id="map" style="height: 200px; border-radius: 8px; margin-top: 10px;"></div>
+        <input type="hidden" id="location" name="location">
+        <button id="use-current-location" class="current-location-button">Use My Current Location</button>
+      </div>
+      <div class="input-group">
+        <label for="media">Upload Media (Optional)</label>
+        <input type="file" id="media" accept="image/*, video/*">
+      </div>
+      <button class="submit-button">Submit Ticket</button>
+    </div>
+
+    <!-- Footer -->
+    <div class="admin-footer">
+      <p>© 2025 Public Reporting System v1.0</p>
+    </div>
+  </div>
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Leaflet Control Geocoder JavaScript -->
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <!-- Leaflet Fullscreen JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.0.0/Control.FullScreen.js"></script>
+
+  <script>
+    // Toggle "Other" category input field
+    function toggleOtherCategory() {
+      const category = document.getElementById('category').value;
+      const otherCategoryGroup = document.getElementById('other-category-group');
+      if (category === 'other') {
+        otherCategoryGroup.style.display = 'block';
+      } else {
+        otherCategoryGroup.style.display = 'none';
+      }
+    }
+
+    // Initialize OpenStreetMap with Leaflet, Geocoder, and Fullscreen
+    let map;
+    let marker;
+    let userLocation;
+
+    function initMap() {
+      // Set default coordinates (e.g., Kuala Lumpur, Malaysia)
+      const defaultCoordinates = [3.1390, 101.6869];
+      const defaultZoom = 12;
+
+      // Initialize the map
+      map = L.map('map').setView(defaultCoordinates, defaultZoom);
+
+      // Add OpenStreetMap tiles
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+      }).addTo(map);
+
+      // Add a draggable marker
+      marker = L.marker(defaultCoordinates, { draggable: true }).addTo(map);
+
+      // Update the hidden input field with the marker's coordinates
+      marker.on('dragend', function (event) {
+        const { lat, lng } = marker.getLatLng();
+        document.getElementById('location').value = `${lat},${lng}`;
+      });
+
+      // Set initial coordinates in the hidden input field
+      document.getElementById('location').value = `${defaultCoordinates[0]},${defaultCoordinates[1]}`;
+
+      // Add the geocoder control (search bar)
+      const geocoder = L.Control.geocoder({
+        defaultMarkGeocode: false, // Disable default behavior
+        placeholder: 'Search for a location...',
+        errorMessage: 'Location not found.',
+        geocoder: L.Control.Geocoder.nominatim({
+          bounds: L.latLngBounds([[1.0, 99.0], [7.0, 105.0]]), // Focus on Malaysia
+        }),
+      })
+        .on('markgeocode', function (event) {
+          const { center, name } = event.geocode;
+          map.setView(center, 15); // Zoom to the selected location
+          marker.setLatLng(center); // Move the marker to the selected location
+          document.getElementById('location').value = `${center.lat},${center.lng}`; // Update hidden input
+
+          // Calculate distance from user's current location (if available)
+          if (userLocation) {
+            const distance = calculateDistance(userLocation, center);
+            alert(`Distance from your current location: ${distance.toFixed(2)} km`);
+          }
+        })
+        .addTo(map);
+
+      // Add fullscreen control
+      L.control.fullscreen({
+        position: 'topleft', // Position of the fullscreen button
+        title: 'View Fullscreen', // Tooltip text
+        titleCancel: 'Exit Fullscreen', // Tooltip text when in fullscreen mode
+        forceSeparateButton: true, // Force a separate button for fullscreen
+      }).addTo(map);
+
+      // Add double-click event to move the marker
+      map.on('dblclick', function (event) {
+        const { lat, lng } = event.latlng;
+        marker.setLatLng([lat, lng]); // Move the marker to the clicked location
+        document.getElementById('location').value = `${lat},${lng}`; // Update hidden input
+      });
+
+      // Add button to use the user's current location
+      document.getElementById('use-current-location').addEventListener('click', function () {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              userLocation = [position.coords.latitude, position.coords.longitude];
+              map.setView(userLocation, 15); // Zoom to the user's location
+              marker.setLatLng(userLocation); // Move the marker to the user's location
+              document.getElementById('location').value = `${userLocation[0]},${userLocation[1]}`; // Update hidden input
+            },
+            (error) => {
+              alert('Unable to retrieve your location. Please ensure location services are enabled.');
+            }
+          );
+        } else {
+          alert('Geolocation is not supported by your browser.');
+        }
+      });
+    }
+
+    // Calculate distance between two coordinates in kilometers
+    function calculateDistance(coord1, coord2) {
+      const [lat1, lon1] = coord1;
+      const [lat2, lon2] = coord2;
+      const R = 6371; // Radius of the Earth in km
+      const dLat = (lat2 - lat1) * (Math.PI / 180);
+      const dLon = (lon2 - lon1) * (Math.PI / 180);
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c; // Distance in km
+    }
+
+    // Initialize the map when the page loads
+    initMap();
+  </script>
+</body>
+</html>

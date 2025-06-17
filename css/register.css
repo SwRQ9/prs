@@ -1,0 +1,193 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles (Consistent with Other Pages) */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.logo h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #ffffff;
+    margin-left: 20px;
+}
+
+.nav-icon {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+/* Registration Section */
+.register-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Allow this section to take up remaining space */
+    padding: 20px;
+    overflow-y: auto; /* Enable scrolling if content exceeds viewport height */
+}
+
+/* Registration Frame */
+.register-frame {
+    width: 100%;
+    max-width: 400px;
+    background-color: #2c3e50;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid #3a3a5f;
+}
+
+.register-frame h2 {
+    text-align: center;
+    margin: 0 0 30px 0;
+    font-size: 28px;
+}
+
+/* Form Styles */
+.register-form .form-group {
+    margin-bottom: 25px;
+}
+
+.register-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #cccccc;
+    font-size: 14px;
+}
+
+/* Input Wrapper Styles */
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    background-color: #1e1e2f;
+    border: 1px solid #3a3a5f;
+    border-radius: 8px;
+    padding: 12px;
+    transition: border-color 0.3s;
+}
+
+.input-wrapper:focus-within {
+    border-color: #3498db;
+}
+
+.input-icon {
+    font-size: 20px;
+    margin-right: 12px;
+    color: #cccccc;
+}
+
+.register-form input {
+    width: 100%;
+    border: none;
+    background: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+.register-form input::placeholder {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Password Toggle */
+.toggle-password {
+    cursor: pointer;
+    margin-left: 10px;
+    user-select: none;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+/* Button Styles */
+.btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+}
+
+/* Login Link */
+.login-link {
+    margin-top: 25px;
+    text-align: center;
+    color: #cccccc;
+}
+
+.login-link a {
+    color: #2ecc71;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Remove borders from inputs and dropdown */
+input, select {
+    width: 100%;
+    border: none !important; /* Remove borders */
+    background: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 16px;
+}
+
+/* Remove dropdown border */
+select {
+    appearance: none;
+    cursor: pointer;
+}
+
+select option {
+    background-color: #2c3e50;
+    color: #ffffff;
+}
+
+/* Footer Styles (Consistent) */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #2c3e50;
+    color: #ffffff;
+    /* Removed position: fixed */
+}

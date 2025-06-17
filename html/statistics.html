@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Report - Admin</title>
+    <link rel="stylesheet" href="../css/statistics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Public Reporting System</h1>
+        </div>
+        <nav>
+            <a href="admin-dashboard.html"><span class="nav-icon">🏠</span> Dashboard</a>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="page-header">
+            <h2><span class="icon">📊</span> Statistics Report</h2>
+        </div>
+
+        <div class="stats-filters">
+            <div class="filter-group">
+                <label>Date Range:</label>
+                <input type="date" id="start-date">
+                <span class="filter-separator">to</span>
+                <input type="date" id="end-date">
+            </div>
+            <button class="filter-btn">Apply Filters</button>
+        </div>
+
+        <div class="stats-summary">
+            <div class="summary-card">
+                <div class="card-icon">📰</div>
+                <div class="card-content">
+                    <h3>Total Announcements</h3>
+                    <p class="card-value" id="total-announcements">0</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">📎</div>
+                <div class="card-content">
+                    <h3>Total Attachments</h3>
+                    <p class="card-value" id="total-attachments">0</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="card-icon">🎫</div>
+                <div class="card-content">
+                    <h3>Total Tickets</h3>
+                    <p class="card-value" id="total-tickets">0</p>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="chart-container">
+            <canvas id="statsChart"></canvas>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Public Reporting System v1.0</p>
+    </footer>
+
+    <script>
+        let statsChart;
+        let statistics = {
+            allData: [],
+            filteredData: []
+        };
+
+        function initChart() {
+            const ctx = document.getElementById('statsChart').getContext('2d');
+            statsChart = new Chart(ctx, {
+                type: 'line',
+                data: getChartData(),
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#ffffff' } }
+                    },
+                    scales: {
+                        x: { grid: { color: '#3a3a5f' }, ticks: { color: '#ffffff' } },
+                        y: { grid: { color: '#3a3a5f' }, ticks: { color: '#ffffff', beginAtZero: true } }
+                    }
+                }
+            });
+        }
+
+        function loadData() {
+            const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+            statistics.allData = announcements.map(ann => ({
+                ...ann,
+                date: new Date(ann.date),
+                attachments: ann.files.length
+            }));
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            
+            statistics.filteredData = statistics.allData.filter(ann => {
+                const annDate = new Date(ann.date);
+                const filterStart = startDate ? new Date(startDate) : null;
+                const filterEnd = endDate ? new Date(endDate) : null;
+                return (!filterStart || annDate >= filterStart) && (!filterEnd || annDate <= filterEnd);
+            });
+
+            updateStatistics();
+            updateChart();
+            updateLastUpdated();
+        }
+
+        function updateStatistics() {
+            // Announcement stats
+            document.getElementById('total-announcements').textContent = statistics.filteredData.length;
+            document.getElementById('total-attachments').textContent = 
+                statistics.filteredData.reduce((sum, ann) => sum + ann.files.length, 0);
+
+            // Ticket stats
+            const tickets = JSON.parse(localStorage.getItem('tickets')) || [];
+            document.getElementById('total-tickets').textContent = tickets.length;
+            document.getElementById('open-tickets').textContent = 
+                tickets.filter(t => t.status === 'open').length;
+        }
+
+        function getChartData() {
+            const monthlyData = statistics.filteredData.reduce((acc, ann) => {
+                const month = new Date(ann.date).toLocaleString('default', { month: 'short' });
+                acc[month] = (acc[month] || 0) + 1;
+                return acc;
+            }, {});
+
+            return {
+                labels: Object.keys(monthlyData),
+                datasets: [{
+                    label: 'Announcements per Month',
+                    data: Object.values(monthlyData),
+                    backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                    borderColor: '#2ecc71',
+                    borderWidth: 2,
+                    tension: 0.4
+                }]
+            };
+        }
+
+        function updateChart() {
+            statsChart.data = getChartData();
+            statsChart.update();
+        }
+
+        function updateLastUpdated() {
+            document.getElementById('last-updated').textContent = new Date().toLocaleString();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            initChart();
+        });
+
+        document.querySelector('.filter-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            applyFilters();
+        });
+    </script>
+</body>
+</html>
